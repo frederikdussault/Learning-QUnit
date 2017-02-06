@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>QUnit Example</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link rel="stylesheet" href="qunit-2.1.1.css">
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <div id="msg" style="border:1px solid black; margin:1em; padding:1em"></div>
+
+  <script src="jquery-3.1.1.js"></script>
+  <script src="jquery-ui.js"></script>
+  <script src="qunit-2.1.1.js"></script>
+  <script>
+  QUnit.test( "a basic test example", function( assert ) {
+    assert.ok( true, "this test is fine" );
+  });
+
+  QUnit.test( "jquery", function( assert ) {
+    var $fixture = $( "#qunit-fixture" );
+    
+    $fixture.append('<div id="content">Allo</div>');
+
+    assert.equal( $('div', $fixture).length, 1 , "div added successfully" );
+    assert.equal( $('#content', $fixture).length, 1 , "id content exists" );
+  });
+
+  var $widgetDiv = $( "#msg" );
+
+  QUnit.test( "jqueryUI - slider creation", function( assert ) {
+    var $slider = $('<div id="slider" />').slider();
+    $widgetDiv.html($slider);
+
+    assert.equal( $('div', $widgetDiv).length, 1 , "div added successfully" );
+    assert.equal( $('#slider', $widgetDiv).length, 1 , "id slider exists" );
+
+    assert.equal( $slider.val(), 0 , "slider value = 0" );
+  });
+
+  QUnit.test( "jqueryUI - slider creation with options", function( assert ) {
+    var $slider = $('<div id="slider" />').slider({
+      value: 5
+    });
+    $widgetDiv.html($slider);
+
+    assert.equal( $slider.slider( "option", "value"), 5 , "slider value = 5" );
+
+    $slider.slider( "option", "value", 10);
+    assert.equal( $slider.slider("value"), 10 , "slider value = 10" );
+    assert.equal( $slider.slider( "option", "value"), 10 , "slider value = 10" );
+
+    $slider.slider( "value", 15);
+    assert.equal( $slider.slider("value"), 15 , "slider value = 15 - slider('value')" );
+    assert.equal( $slider.slider( "option", "value"), 15 , "slider value = 15 - slider('option','value')" );
+    // demonstration que .slider("value") et .slider( "option", "value") donnent le même résultat
+  });
+
+  QUnit.test( "jqueryUI - traitement des événements", function( assert ) {
+    var $slider = $('<div id="slider" />').slider({
+      value: 5
+    });
+    $widgetDiv.html($slider);
+
+    // TODO - events detection
+
+  });
+  </script>
+</body>
+</html>
